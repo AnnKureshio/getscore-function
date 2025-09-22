@@ -3,11 +3,11 @@
  * @param {string} name
  * @returns {boolean}
  */
-export const nameIsValid = name => typeof name === 'string' && name.length >= 2 && /^[a-z]+$/.test(name)
+export const nameIsValid = name =>
+  typeof name === 'string' && name.length >= 2 && /^[a-z]+$/.test(name)
 
 /**
  * Удаление пробелов из строки
- *
  * @param {string} text
  * @returns {string}
  */
@@ -38,3 +38,28 @@ export const getTotal = (items = [], discount = 0) => {
   const total = items.reduce((acc, { price, quantity }) => acc + price * quantity, 0)
   return total * (1 - discount / 100)
 }
+
+/**
+ * Подсчёт общей успеваемости студентов
+ *
+ * @param {{ [name: string]: number }} scores - Объект с баллами по никам
+ * @returns {number} Сумма всех баллов
+ * @example getScore({ Anna: 10, Olga: 1, Ivan: 5 }) // 16
+ */
+export const getScore = scores => {
+  let total = 0
+  for (const key in scores) {
+    total += scores[key]
+  }
+  return total
+}
+
+// Пример использования:
+const scoresExample = {
+  Anna: 10,
+  Olga: 1,
+  Ivan: 5,
+}
+
+console.log(getScore(scoresExample)) // 16
+console.log("Hello, world!")
