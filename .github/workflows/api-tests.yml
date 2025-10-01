@@ -7,13 +7,11 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# Даем разрешения для Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Разрешаем только один concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -42,9 +40,6 @@ jobs:
       - name: Run API tests
         run: npm run test:api:ci
 
-      - name: List files for debugging
-        run: ls -la
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
@@ -56,6 +51,34 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Send Telegram notification on success
+        if: success()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ✅ Tests PASSED
+            Repo: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Report: ${{ steps.deployment.outputs.page_url }}
+            Workflow: ${{ github.workflow }}
+
+      - name: Send Telegram notification on failure
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ❌ Tests FAILED
+            Repo: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            Workflow: ${{ github.workflow }}
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
