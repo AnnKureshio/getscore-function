@@ -28,6 +28,12 @@ class BaseService {
     return response.data;
   }
 
+  // Метод для обновления информации (PUT запрос)
+  async put(url, data, options = {}) {
+    const response = await this.client.put(url, data, options);
+    return response.data;
+  }
+
   // Метод для удаления информации (DELETE запрос)
   async delete(url, options = {}) {
     const response = await this.client.delete(url, options);
