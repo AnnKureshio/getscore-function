@@ -6,7 +6,10 @@
     "start": "babel-node src/main.js",
     "lint:ci": "eslint .",
     "lint": "eslint . --fix",
-    "test": "jest"
+    "test": "jest",
+    "test:api": "jest specs/",
+    "test:unit": "jest src/test/",
+    "test:all": "jest"
   },
   "author": "Damir Rysaev <freepad@ya.ru>",
   "keywords": [],
@@ -43,6 +46,7 @@
     "array.prototype.reduce": "^1.0.7",
     "arraybuffer.prototype.slice": "^1.0.3",
     "available-typed-arrays": "^1.0.7",
+    "axios": "^1.12.2",
     "babel-jest": "^29.7.0",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-jest-hoist": "^29.6.3",
