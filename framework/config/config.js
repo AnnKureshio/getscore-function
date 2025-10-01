@@ -9,11 +9,19 @@ export const config = {
       authorized: '/Account/v1/Authorized',      // Страница входа
       user: '/Account/v1/User',                  // Страница пользователя
       generateToken: '/Account/v1/GenerateToken' // Страница получения ключа
+    },
+    bookstore: {
+      books: '/BookStore/v1/Books',  // Страница всех книг
+      book: '/BookStore/v1/Book'     // Страница одной книги
     }
   },
 
   // Стандартный пароль для тестов
   testData: {
-    validPassword: 'TestPassword123!'
+    validPassword: 'TestPassword123!',
+    testBook: {
+      isbn: '9781449325862',      // ISBN тестовой книги
+      title: 'Git Pocket Guide'   // Название тестовой книги
+    }
   }
 };
