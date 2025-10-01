@@ -1,14 +1,29 @@
-name: API Tests
+name: API Tests and Deploy
 
 on:
   push:
     branches: [ add-getscore-function, main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Позволяет запускать вручную
+  workflow_dispatch:
+
+# Даем разрешения для Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Разрешаем только один concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   test:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
 
     steps:
