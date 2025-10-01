@@ -27,6 +27,16 @@ jobs:
       - name: Run API tests
         run: npm run test:api:ci
 
+      - name: List files for debugging
+        run: ls -la
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          # Убраны publish_branch и keep_files чтобы избежать конфликтов
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
@@ -35,11 +45,3 @@ jobs:
             test-report.html
             coverage/
           retention-days: 30
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          publish_branch: gh-pages
-          keep_files: true
